@@ -1,0 +1,7 @@
+name: Pull Request Hook
+on: pull_request
+jobs:
+  payload:
+    runs-on: ubuntu-latest
+    steps:
+      run: cat $GITHUB_EVENT_PATH
