@@ -5,3 +5,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: cat $GITHUB_EVENT_PATH
+      - name: request api
+        run: curl -H "Authorization: token OAUTH-TOKEN" https://api.github.com/repos/SnowCait/github-hooks-sandbox/pulls/5/reviews
