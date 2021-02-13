@@ -26,3 +26,30 @@ jobs:
             for (const review in reviews.filter(review => review.state.toLowerCase() != "commented").reverse()) {
               console.log()
             }
+      - name: GitHub Script
+        uses: actions/github-script@v3.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const reviews = ${{ steps.reviews.outputs.data }}
+            for (const review in reviews.filter(review => review.state.toLowerCase() != "commented")) {
+              console.log()
+            }
+      - name: GitHub Script
+        uses: actions/github-script@v3.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const reviews = ${{ steps.reviews.outputs.data }}
+            for (const review in reviews) {
+              console.log()
+            }
+      - name: GitHub Script
+        uses: actions/github-script@v3.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const reviews = ${{ steps.reviews.outputs.data }}
+            for (const review in reviews.reverse()) {
+              console.log()
+            }
