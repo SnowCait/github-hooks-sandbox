@@ -23,6 +23,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const reviews = ${{ steps.reviews.outputs.data }}
-            for (const review in reviews.reverse()) {
-              console.log(`${review.user.login}: ${review.state}`
+            for (const review in reviews.filter(review => review.state.toLowerCase() != "commented").reverse()) {
+              console.log(`${review.user.login}: ${review.state}`)
             }
