@@ -15,6 +15,8 @@ jobs:
           owner: SnowCait
           repo: github-hooks-sandbox
           pull_number: ${{ github.event.pull_request.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Response
         run: echo ${{ steps.reviews.outputs.data }}
       - name: GitHub Script
