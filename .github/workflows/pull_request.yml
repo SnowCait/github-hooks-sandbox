@@ -17,8 +17,6 @@ jobs:
           pull_number: ${{ github.event.pull_request.number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Response
-        run: echo ${{ steps.reviews.outputs.data }}
       - name: GitHub Script
         uses: actions/github-script@v3.1.0
         with:
