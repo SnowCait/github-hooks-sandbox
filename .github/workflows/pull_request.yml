@@ -6,7 +6,7 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - name: request api
-        run: 'curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/SnowCait/github-hooks-sandbox/pulls/5/reviews'
+        run: 'curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/SnowCait/github-hooks-sandbox/pulls/${{ github.event.pull_request.number }}/reviews'
       - name: Reviews
         id: reviews
         uses: octokit/request-action@v2.0.2
@@ -15,8 +15,35 @@ jobs:
           owner: SnowCait
           repo: github-hooks-sandbox
           pull_number: ${{ github.event.pull_request.number }}
-      - name: Response
-        run: echo ${{ steps.reviews.outputs.data }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: GitHub Script
+        uses: actions/github-script@v3.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const reviews = ${{ steps.reviews.outputs.data }}
+            for (const review in reviews.filter(review => review.state.toLowerCase() != "commented").reverse()) {
+              console.log()
+            }
+      - name: GitHub Script
+        uses: actions/github-script@v3.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const reviews = ${{ steps.reviews.outputs.data }}
+            for (const review in reviews.filter(review => review.state.toLowerCase() != "commented")) {
+              console.log()
+            }
+      - name: GitHub Script
+        uses: actions/github-script@v3.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const reviews = ${{ steps.reviews.outputs.data }}
+            for (const review in reviews) {
+              console.log()
+            }
       - name: GitHub Script
         uses: actions/github-script@v3.1.0
         with:
@@ -24,5 +51,5 @@ jobs:
           script: |
             const reviews = ${{ steps.reviews.outputs.data }}
             for (const review in reviews.reverse()) {
-              console.log(`${review.user.login}: ${review.state}`
+              console.log()
             }
